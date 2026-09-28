@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXPEDIENTE CLASIFICADO: AITOR REDFIRE & SECTOR 4</title>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: rgba(16, 24, 40, 0.85);
+            --primary-color: #00f0ff;
+            --accent-fire: #ff4500;
+            --text-color: #e0e6ed;
+            --border-color: #1e293b;
+            --umbrella-red: #ff2a2a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.05) 0%, transparent 80%),
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 20px 20px, 20px 20px;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            border-bottom: 2px solid var(--primary-color);
+            margin-bottom: 30px;
+            background: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
+        }
+
+        header h1 {
+            color: var(--primary-color);
+            font-size: 2.2rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+        }
+
+        header p {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            margin-top: 5px;
+        }
+
+        .badge-container {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: rgba(255, 69, 0, 0.2);
+            border: 1px solid var(--accent-fire);
+            color: #ff7b54;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .badge.blue {
+            background: rgba(0, 240, 255, 0.2);
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .chapter {
+            background: var(--card-bg);
+            border-left: 4px solid var(--primary-color);
+            border-radius: 0 8px 8px 0;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .chapter:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 20px rgba(0, 240, 255, 0.1);
+        }
+
+        .chapter.fire {
+            border-left-color: var(--accent-fire);
+        }
+
+        .chapter.umbrella {
+            border-left-color: var(--umbrella-red);
+        }
+
+        .chapter h2 {
+            color: #fff;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chapter .meta {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .chapter p {
+            margin-bottom: 12px;
+            color: #cbd5e1;
+        }
+
+        .chat-box {
+            background: #070a12;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .chat-msg {
+            margin-bottom: 10px;
+        }
+
+        .chat-msg .author {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .chat-msg.fire .author {
+            color: var(--accent-fire);
+        }
+
+        .chat-msg.redfield .author {
+            color: #3b82f6;
+        }
+
+        .chat-msg.ashley .author {
+            color: #eab308;
+        }
+
+        .interactive-section {
+            margin-top: 40px;
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid var(--primary-color);
+            text-align: center;
+        }
+
+        button {
+            background: linear-gradient(135deg, var(--primary-color), #0088ff);
+            color: #000;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            margin-top: 15px;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        #log-output {
+            margin-top: 15px;
+            padding: 15px;
+            background: #000;
+            color: #00ff66;
+            font-family: monospace;
+            border-radius: 4px;
+            text-align: left;
+            display: none;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #64748b;
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>S.E.C.T.O.R. 4 // REGISTRO DE OPERACIONES</h1>
+            <p>ARCHIVO ARCHIVISTA DE BIOTERRORISMO - REGISTRO DE AITOR REDFIRE</p>
+            <div class="badge-container">
+                <span class="badge blue">ESTADO: ACTIVO</span>
+                <span class="badge">SANGRE: FUEGO VERÓNICA</span>
+                <span class="badge blue">EQUIPO: HACHA RÉQUIEM</span>
+            </div>
+        </header>
+
+        <div class="timeline">
+
+            <!-- CAPÍTULO 1 -->
+            <div class="chapter">
+                <h2>1. Línea Temporal Alternativa: S.T.A.R.S. (1998)</h2>
+                <div class="meta">Ubicación: R.P.D. Comisaría // Fecha: Julio 1998</div>
+                <p>En un universo donde Umbrella nunca creó Las Conexiones, Aitor creció sin traumas biomilitares. Se unió a S.T.A.R.S. junto a Jill Valentine y Chris Redfield. En su primer día en la comisaría del R.P.D., destacó como el especialista en armas pesadas del Alpha Team, equipado con su prototipo del Hacha Réquiem.</p>
+            </div>
+
+            <!-- CAPÍTULO 2 -->
+            <div class="chapter fire">
+                <h2>2. La Barricada y las Piezas Perdidas (2026)</h2>
+                <div class="meta">Ubicación: Ruinas de Raccoon City // Hora: 19:30 P.M.</div>
+                <p>Aitor derrota a una Araña Gigante mutada con Cepa T-Fósil y avanza hacia la Barricada Militar. Al notar que falta el detonador del C4, comunica por radio con Ashley Graham, quien le indica la localización de las tres piezas necesarias para armar el dispositivo: el Relé Distribuidor en el puente este, la Batería de Alta Densidad en el camión volcado y la Espoleta de Impacto en la ambulancia del metro.</p>
+            </div>
+
+            <!-- CAPÍTULO 3 -->
+            <div class="chapter">
+                <h2>3. El Recuerdo en el Porsche</h2>
+                <div class="meta">Ubicación: Centro de Raccoon City // Hora: 20:15 P.M.</div>
+                <p>A bordo del Porsche 911 Targa plateado, Aitor regresa al centro de la ciudad destruida. Los recuerdos de 1998 —las llamas, la estática azul despierta para proteger a Ashley y las enseñanzas de Leon S. Kennedy— invaden su mente mientras se prepara para cerrar el círculo de la ciudad fantasma.</p>
+            </div>
+
+            <!-- CAPÍTULO 4 -->
+            <div class="chapter umbrella">
+                <h2>4. Ruptura con la BSAA: Chris Redfield y el Hound Wolf Squad</h2>
+                <div class="meta">Ubicación: Zurich, Suiza // Año: 2021</div>
+                <p>Tras descubrir que la BSAA utilizaba soldados clones sintéticos en La Aldea, Chris Redfield se encaró con la directiva, tiró su placa y abandonó la organización para fundar el <strong>Hound Wolf Squad</strong> junto a sus mejores operadores, aliándose directamente con Aitor y el Sector 4 para desmantelar la corrupción interna.</p>
+            </div>
+
+            <!-- CAPÍTULO 5 -->
+            <div class="chapter">
+                <h2>5. Retorno al Loft del Sector 4</h2>
+                <div class="meta">Ubicación: Washington D.C. // Hora: 22:30 P.M.</div>
+                <p>De regreso en casa, Aitor es recibido por Ashley Graham, la pequeña Eveline (libre de la infección de moho) y la familia Winters. Aitor descansa junto a su familia mientras recibe mensajes de apoyo de Chris, Leon y Jill en el chat privado.</p>
+            </div>
+
+            <!-- CAPÍTULO 6 -->
+            <div class="chapter fire">
+                <h2>6. Entrenamiento de Élite con Jill Valentine</h2>
+                <div class="meta">Ubicación: Base Táctica de la DSO // Hora: 06:00 A.M.</div>
+                <p>Jill exige el máximo rendimiento a Aitor en el gimnasio de combate. Exigiéndole no confiar ciegamente en su piroquinesis o bioelectricidad, la ex-agente de S.T.A.R.S. demuestra por qué la disciplina física y la agilidad mental son la verdadera clave de la supervivencia en el bioterrorismo.</p>
+            </div>
+
+            <!-- CAPÍTULO 7 -->
+            <div class="chapter umbrella">
+                <h2>7. El Colapso Viral y el Encuentro con Leon</h2>
+                <div class="meta">Ubicación: Subsuelo de Raccoon City // Hora: 12:15 P.M.</div>
+                <p>Aitor sufre los síntomas de la radiación biológica de la ciudad, tosiendo sangre como le ocurrió a Leon S. Kennedy en los eventos de <em>Requiem</em>. Leon interviene en el túnel para administrarle un suero de estabilización celular, salvándole la vida.</p>
+            </div>
+
+            <!-- CAPÍTULO 8 -->
+            <div class="chapter">
+                <h2>8. La Sombra Invisible en Resident Evil 3 Remake</h2>
+                <div class="meta">Ubicación: Calles de Raccoon City // Septiembre 1998</div>
+                <p>Equipado con su casco táctico, el Aitor del futuro vigila a Jill Valentine desde los tejados. Espera el momento perfecto para disparar un proyectil bioeléctrico a la espalda de Nemesis, dándole a Jill tres segundos vitales para abordar el vehículo y escapar junto a Carlos Oliveira sin alterar la línea temporal.</p>
+            </div>
+
+            <!-- CAPÍTULO 9 -->
+            <div class="chapter fire">
+                <h2>9. La Caída de Eveline en Dulvey (2017)</h2>
+                <div class="meta">Ubicación: Plantación Baker, Luisiana // Hora: 03:45 A.M.</div>
+                <p>Aitor queda exhausto y de rodillas sobre la tierra, sostenido únicamente por su Hacha Réquiem incandescente tras contener la cepa E. Chris Redfield desciende del helicóptero de Umbrella Azul y, conmovido por el esfuerzo de Aitor, ordena asistencia médica inmediata para evacuarlo.</p>
+            </div>
+
+            <!-- CAPÍTULO 10 -->
+            <div class="chapter umbrella">
+                <h2>10. El Sacrificio de Ethan Winters en La Aldea</h2>
+                <div class="meta">Ubicación: Rumanía // Hora: 05:40 A.M.</div>
+                <p>Aitor rescata a Mia y a la pequeña Rose. Ethan, consciente de que su cuerpo hecho de micelio ha llegado a su límite desde 2017, le entrega el detonador a Aitor y le hace prometer que cuidará de su hija. Aitor evacúa a la familia mientras la explosión destruye el Megamiceto.</p>
+            </div>
+
+            <!-- CAPÍTULO 11 -->
+            <div class="chapter">
+                <h2>11. Infiltración en el Chat de Tricell & The Connections</h2>
+                <div class="meta">Ubicación: Loft de Washington // Hora: 02:15 A.M.</div>
+                <p>Aitor observa cómo Excella Gionne, Lucas Baker, Alan Droney e Irving discuten ridículamente en un chat privado. Al intervenir Aitor anunciando que la DSO está rastreando sus direcciones IP, los líderes del bioterrorismo entran en pánico y borran el grupo de inmediato.</p>
+            </div>
+
+            <!-- CAPÍTULO 12 -->
+            <div class="chapter fire">
+                <h2>12. Intervención en la Casa de Invitados (RE7)</h2>
+                <div class="meta">Ubicación: Finca Baker // Hora: 22:15 P.M.</div>
+                <p>Aitor efectúa un tackle táctico sobre un descontrolado Ethan Winters, desarmándolo y tirando la pistola al suelo para evitar que la infección o el pánico causen una tragedia, ofreciéndole su apoyo para rescatar a Mia.</p>
+            </div>
+
+            <!-- CAPÍTULO 13 -->
+            <div class="chapter umbrella">
+                <h2>13. La Promesa en España: Las Plagas</h2>
+                <div class="meta">Ubicación: Cabaña en Pueblo Español // Hora: 18:30 P.M.</div>
+                <p>Ashley y Leon muestran los síntomas graves de Las Plagas tosiendo sangre. Aitor promete que <em>"Nadie se queda atrás"</em>. La transmisión es escuchada en tiempo real por Claire y Chris Redfield desde la base de la BSAA, preparando la evacuación.</p>
+            </div>
+
+            <!-- CAPÍTULO 14 -->
+            <div class="chapter fire">
+                <h2>14. Duelo con Krauser y la Curación</h2>
+                <div class="meta">Ubicación: Sanatorio de la Isla // Hora: 22:15 P.M.</div>
+                <p>Aitor derrota a Jack Krauser disparando un Lanzacohetes (RPG-7) directo a su torso mutado. Posteriormente, conecta su biotraje a la máquina de radiación ultravioleta y elimina quirúrgicamente Las Plagas de Ashley y Leon mediante pulsos bioeléctricos.</p>
+            </div>
+
+            <!-- CAPÍTULO 15 -->
+            <div class="chapter">
+                <h2>15. La Decisión de Ashley Graham</h2>
+                <div class="meta">Ubicación: Cuartel General de la BSAA // Hora: 14:20 P.M.</div>
+                <p>Ashley habla por teléfono con el Presidente Graham y rechaza volver a Washington, declarando que está profundamente enamorada de Aitor y que se unirá a la BSAA como su compañera oficial en el Sector 4, recibiendo la bienvenida de Jill, Chris y Claire.</p>
+            </div>
+
+        </div>
+
+        <div class="interactive-section">
+            <h3>TERMINAL DE COMANDO DEL SECTOR 4</h3>
+            <p>Presiona el botón para ejecutar el diagnóstico biométrico del Comandante Aitor Redfire.</p>
+            <button onclick="runDiagnostics()">EJECUTAR ESCÁNER BIOMÉTRICO</button>
+            <div id="log-output"></div>
+        </div>
+
+        <footer>
+            <p>S.E.C.T.O.R. 4 // CÓDIGO ABIERTO // REGISTROS RE-UNIVERSE 2026</p>
+        </footer>
+    </div>
+
+    <script>
+        function runDiagnostics() {
+            const output = document.getElementById('log-output');
+            output.style.display = 'block';
+            output.innerHTML = '> Iniciando escáner de biometría encriptada...<br>';
+            
+            const logs = [
+                '> Conectando con Traje Táctico Sector 4...',
+                '> Foco térmico detectado: Fuego Verónica (Estabilizado).',
+                '> Carga bioeléctrica: 98% Capacidad de Pulso.',
+                '> Estado de parásitos / infecciones: NEGATIVO (Purificado).',
+                '> Arma primaria: Hacha de Combate Réquiem (Listo).',
+                '> Enlace de comunicación con Ashley Graham: CONECTADO.',
+                '> ENCRYPTION KEY VALIDATED. SISTEMA OPERATIVO AL 100%.'
+            ];
+
+            let index = 0;
+            const interval = setInterval(() => {
+                if (index < logs.length) {
+                    output.innerHTML += logs[index] + '<br>';
+                    output.scrollTop = output.scrollHeight;
+                    index++;
+                } else {
+                    clearInterval(interval);
+                }
+            }, 400);
+        }
+    </script>
+</body>
+</html>
